@@ -249,7 +249,7 @@ function generateReceipt() {
         <hr>
         <div class="d-flex justify-content-between"><strong>Subtotal</strong><span>₱${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
         <div class="d-flex justify-content-between"><strong>Discount (10%)</strong><span>−₱${discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
-        <div class="d-flex justify-content-between"><strong>VAT (12%)</strong><span>₱${tax.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
+        <div class="d-flex justify-content-between"><strong>Tax (12%)</strong><span>₱${tax.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
         <div class="d-flex justify-content-between"><strong>Shipping Fee</strong><span>₱${shipping.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
         <hr>
         <div class="d-flex justify-content-between fs-5 fw-bold"><span>Total</span><span>₱${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
