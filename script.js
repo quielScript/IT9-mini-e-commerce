@@ -145,13 +145,28 @@ function clearCart() {
 
 function computeTotals() {
 	const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-	const tax = subtotal * 0.12;
-	const total = subtotal + tax;
+
+	// Discount Rule: 10% discount if Subtotal >= ₱1000
+	const discount = subtotal >= 1000 ? subtotal * 0.1 : 0;
+
+	// Tax: 12% of (Subtotal - Discount)
+	const taxableAmount = subtotal - discount;
+	const tax = taxableAmount * 0.12;
+
+	// Shipping Fee: ₱80 if subtotal < ₱500, Free if subtotal ≥ ₱500
+	const shipping = subtotal < 500 ? 80 : 0;
+
+	// Grand Total: (Subtotal - Discount) + Tax + Shipping
+	const total = taxableAmount + tax + shipping;
 
 	subtotalEl.textContent =
 		"₱" + subtotal.toLocaleString(undefined, { minimumFractionDigits: 2 });
+	document.getElementById("discount").textContent =
+		"₱" + discount.toLocaleString(undefined, { minimumFractionDigits: 2 });
 	taxEl.textContent =
 		"₱" + tax.toLocaleString(undefined, { minimumFractionDigits: 2 });
+	document.getElementById("shipping").textContent =
+		"₱" + shipping.toLocaleString(undefined, { minimumFractionDigits: 2 });
 	totalEl.textContent =
 		"₱" + total.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
@@ -222,15 +237,20 @@ function generateReceipt() {
 	});
 
 	const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-	const tax = subtotal * 0.12;
-	const total = subtotal + tax;
+	const discount = subtotal >= 1000 ? subtotal * 0.1 : 0;
+	const taxableAmount = subtotal - discount;
+	const tax = taxableAmount * 0.12;
+	const shipping = subtotal < 500 ? 80 : 0;
+	const total = taxableAmount + tax + shipping;
 
 	html += `
             </tbody>
         </table>
         <hr>
         <div class="d-flex justify-content-between"><strong>Subtotal</strong><span>₱${subtotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
+        <div class="d-flex justify-content-between"><strong>Discount (10%)</strong><span>−₱${discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
         <div class="d-flex justify-content-between"><strong>VAT (12%)</strong><span>₱${tax.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
+        <div class="d-flex justify-content-between"><strong>Shipping Fee</strong><span>₱${shipping.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
         <hr>
         <div class="d-flex justify-content-between fs-5 fw-bold"><span>Total</span><span>₱${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span></div>
         <div class="text-center mt-4 text-muted small">Thank you for your purchase!</div>
