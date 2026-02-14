@@ -1,0 +1,32 @@
+.card-img-top {
+	height: 180px;
+	object-fit: contain;
+	padding: 15px;
+	background: #f8f9fa;
+}
+
+.cart-table th,
+.cart-table td {
+	vertical-align: middle;
+}
+
+.quantity-input {
+	width: 70px;
+	display: inline-block;
+}
+
+@media print {
+	body * {
+		visibility: hidden;
+	}
+	#receiptModal,
+	#receiptModal * {
+		visibility: visible;
+	}
+	#receiptModal {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+	}
+}
