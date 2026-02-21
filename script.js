@@ -125,8 +125,13 @@ function addToCart(productId) {
 
 function changeQty(id, delta) {
 	const item = cart.find((i) => i.id === id);
+
 	if (!item) return;
-	item.qty = Math.max(1, item.qty + delta);
+
+	item.qty = Math.max(0, item.qty + delta);
+
+	if (item.qty === 0) removeItem(item.id);
+
 	renderCart();
 }
 
